@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>The C Standard charter</title>
+  <meta name="author" content="ISO/IEC JTC1/SC22/WG14">
+  <meta name="description" content="Guiding document with overview of the C committee's mission and expectations">
+  <meta name="keywords" content="C,Standard,WG14,charter,principles">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    a {
+      color: #03d;
+      text-decoration: underline dotted 1px;
+      text-underline-offset: 3px;
+    }
+
+    h1, h2, h3, h4, h5 {
+      margin-top: 1.5em;
+      margin-bottom: 0.1em;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    p + p {
+      margin-top: 1em;
+    }
+
+    ul, ol {
+      margin: 0;
+      line-height: 1.3em;
+    }
+
+    div {
+      width: 100%;
+    }
+
+    .nbsp {
+      white-space: nowrap;
+    }
+
+    h1 > a {
+      color: inherit;
+    }
+
+
+    body {
+      display: flex;
+      flex-direction: column;
+      font-family: Arial;
+      font-size: 18px;
+      margin: 20px auto;
+      padding: 10px;
+      max-width: 830px;
+      min-height: 98vh;
+    }
+
+    body > header {
+      font-size: 1.1em;
+      display: inline-flex;
+    }
+
+    body > header h1 {
+      margin-top: 0;
+    }
+
+    body > header img {
+      height: 100%;
+    }
+
+    body p {
+      text-align: justify;
+    }
+
+
+    #authors table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    #authors table td {
+      padding: 3px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+
+    #prior-art a, #changelog a {
+      display: inline-block;
+      min-width: 7ch;
+    }
+
+    #Principles summary {
+      font-weight: bold;
+      font-size: 1.1em;
+      margin-top: 1em;
+    }
+
+    #Principles summary > a {
+      color: inherit;
+    }
+
+    #Principles summary + p {
+      margin-top: 0.3em;
+    }
+
+
+    @media (max-device-width: 650px) {
+      body p {
+        text-align: left !important;
+      }
+
+      #authors table {
+        margin-left: 0.5em;
+      }
+
+      #authors table tr {
+        display: block;
+        margin-bottom: 0.3em;
+      }
+
+      #authors table td {
+        display: block;
+        border: none !important;
+        text-align: initial;
+      }
+
+      #authors table td + td {
+        margin-left: 1em;
+      }
+    }
+
+    @media print {
+      p, details {
+        page-break-inside: avoid;
+      }
+
+      body > div > h1 {
+        page-break-before: always;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>The C Standard charter</h1>
+      WG14 N3280<br>
+      <time>2024-06-12</time>
+    </div>
+    <img alt="" src="https://www.open-std.org/pics/isoiec.gif" />
+  </header>
+
+  <div id="abstract">
+    <h3>Abstract</h3>
+    <p>
+    This is a guiding document with an overview of the mission and expectations of the C committee
+    </p>
+  </div>
+
+  <div id="authors">
+    <h3>Authors</h3>
+    <table>
+      <tr>
+        <td><strong>Robert C. Seacord</strong></td>
+        <td>Woven by Toyota</td>
+        <td>United States</td>
+        <td><a href="mailto:rcseacord@gmail.com">rcseacord@gmail.com</a></td>
+      </tr>
+      <tr>
+        <td><strong>Jakub Łukasiewicz</strong></td>
+        <td>Motorola Solutions</td>
+        <td>Poland</td>
+        <td><a href="mailto:me@jorenar.com">me@jorenar.com</a></td>
+      </tr>
+      <tr>
+        <td><strong>Christopher Bazley</strong></td>
+        <td>ARM</td>
+        <td>United Kingdom</td>
+        <td><a href="mailto:chris.bazley@arm.com">chris.bazley@arm.com</a></td>
+      </tr>
+      <tr>
+        <td><strong>Jens Gustedt</strong></td>
+        <td>INRIA and ICube</td>
+        <td>France</td>
+        <td><a href="mailto:jens.gustedt@inria.fr">jens.gustedt@inria.fr</a></td>
+      </tr>
+      <tr>
+        <td><strong>Martin Uecker</strong></td>
+        <td>Graz University of Technology</td>
+        <td>Austria</td>
+        <td><a href="mailto:uecker@tugraz.at">uecker@tugraz.at</a></td>
+      </tr>
+      <tr>
+        <td><strong>Rajan Bhakta</strong></td>
+        <td>IBM</td>
+        <td>USA, Canada</td>
+        <td><a href="mailto:rbhakta@us.ibm.com">rbhakta@us.ibm.com</a></td>
+      </tr>
+      <tr>
+        <td><strong>Miguel Ojeda</strong></td>
+        <td></td>
+        <td>Spain</td>
+        <td><a href="mailto:ojeda@ojeda.dev">ojeda@ojeda.dev</a></td>
+      </tr>
+      <tr>
+        <td><strong>Carlos Andrés Ramírez</strong></td>
+        <td>Woven by Toyota</td>
+        <td>Japan</td>
+        <td><a href="mailto:carlos.ramirez@carlos.engineer">carlos.ramirez@carlos.engineer</a></td>
+      </tr>
+      <tr>
+        <td><strong>Ori Bernstein</strong></td>
+        <td></td>
+        <td>Canada</td>
+        <td><a href="mailto:ori@orib.dev">ori@orib.dev</a></td>
+      </tr>
+      <tr>
+        <td><strong>Rashmi Jadhav</strong></td>
+        <td>Woven by Toyota</td>
+        <td>United States</td>
+        <td><a href="mailto:rjrashmijadhav3@gmail.com">rjrashmijadhav3@gmail.com</a></td>
+      </tr>
+    </table>
+  </div>
+
+  <div id="prior-art">
+    <h3>Prior art</h3>
+    <ul>
+      <li>
+        <a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/historic/n444.htm">N444</a>
+        C - The C9X Charter
+      </li>
+      <li>
+        <a class="c17" href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1250.pdf">N1250</a>
+        C - The C1X Charter
+      </li>
+      <li>
+        <a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2611.htm">N2611</a>
+        Programming Language C - C23 Charter
+      </li>
+      <li>
+        <a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2986.htm">N2986</a>
+        Interpreting the C23 Charter
+      </li>
+      <li>
+        <a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3279.htm">N3279</a>
+        Relation of charter N3280 to old N2611
+      </li>
+    </ul>
+  </div>
+
+  <div id="changelog">
+    <h3>Changelog</h3>
+    <ul>
+      <li>
+        <a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3280.htm">N3280</a>
+        (<time>2024-06-12</time>)
+        <ul>
+          <li>rename "safe programming" to "secure programming"</li>
+          <li>change document format to HTML</li>
+        </ul>
+      </li>
+      <li>
+        <a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3255.pdf">N3255</a>
+        (<time>2024-05-06</time>)
+        <ul>
+          <li>grammar, punctuation, style, and rewording for clarity</li>
+          <li>principle about "internationalization"</li>
+        </ul>
+      </li>
+      <li>
+        <a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3223.pdf">N3223</a>
+        (<time>2024-02-23</time>)
+        <ul>
+          <li>
+            initial rewrite
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <div id="Introduction">
+    <h1><a href="#Introduction">Introduction</a></h1>
+
+    <p>
+    The working group ISO/IEC JTC1/SC22/WG14, commonly known as the
+    C Committee, is the steward of the C programming language, first
+    described in 1978 by <span class="nbsp">Kernighan &amp; Ritchie</span>
+    in book <i class="nbsp">The C Programming Language</i>, and now by
+    revisions of <em>ISO/IEC 9899</em> standard and other technical
+    specifications. The Committee is part of a broader community
+    responsible for the maintenance and evolution of the C language;
+    narrowly, it is responsible for the normative aspects of the
+    C programming language and its interplay with other standards' bodies.
+    </p>
+
+    <p>
+    C is a general-purpose high-level programming language suitable for
+    low-level programming, in other words: <em>system programming language</em>.
+    Although its development began on the Unix operating system for the PDP-11
+    computer, it has since been implemented for practically all devices and
+    systems in the world. It is of fundamental importance for many aspects of
+    computing and data processing. C serves as a <em>lingua franca</em> to
+    translate between various systems and languages. C is often used as a target
+    language for compilers, as an implementation language for interpreters, for
+    building operating systems, for embedded programming, for teaching
+    fundamentals of computing, and for general purpose programming. It stands
+    out in terms of portability, interoperability, efficiency, and stability.
+    </p>
+
+    <p>
+    The work of the Committee is, in large part, a balancing act. The Committee
+    tries to improve portability while retaining the definition of certain
+    features of C as machine-dependent, attempts to incorporate valuable new
+    ideas without disrupting the basic structure and nature of the language and
+    tries to develop a clear and consistent language without invalidating
+    existing programs. All of the goals are important and each decision weighed
+    in the light of sometimes contradictory requirements in an attempt to reach
+    a workable compromise. The C Committee is also in active liaison with C++
+    committee. While unnecessary incompatibilities between the two languages
+    are to be avoided and some features of C++ may be embraced, the Committee
+    is content to let C++ be the big, ambitious language, while maintaining
+    C's simplicity.
+    </p>
+
+    <p>
+    Areas to which the Committee shall look when revising C include:
+    </p>
+    <ul>
+      <li>Technical Corrigenda and Records of Response;</li>
+      <li>Technical Specifications developed by WG14;</li>
+      <li>future directions in the current Standard;</li>
+      <li>features currently labeled obsolescent or deprecated;</li>
+      <li>requirements resulting from JTC1/SC2 (character sets);</li>
+      <li>the evolution of safety-critical software development;</li>
+      <li>all known software security issues (programming language vulnerabilities);</li>
+      <li>the evolution of C++ and other C based programming languages;</li>
+      <li>the evolution of other programming languages;</li>
+      <li>the evolution of C implementations, including compilers, libraries and operating systems;</li>
+      <li>other papers and proposals from members;</li>
+      <li>cross-language standards groups' work;</li>
+      <li>other comments from the public at large;</li>
+      <li>subsetting the Standard;</li>
+      <li>other prior art.</li>
+    </ul>
+  </div>
+
+  <div id="Principles">
+    <h1><a href="#Principles">Principles</a></h1>
+
+    <p>
+    In specifying a standard language, the Committee uses several guiding
+    principles. There are many facets of the traditional spirit of C, but the
+    essence is a community sentiment of these underlying principles upon which
+    the C language is based. The principles serve also an important purpose in
+    preventing falling into the <i>design by committee</i> pitfall. That being
+    said, judgment over technical proposals relies solely on Committee members'
+    expertise, therefore submitters are encouraged to keep these principles
+    in mind when making submissions. While there is a tradeoff between the
+    principles and <strong>none of them is absolute</strong>, the more a
+    proposal deviates, the more rationale is needed to explain the deviation.
+    </p>
+
+    <p>
+    The following is a list of principles upon which the Committee revises the Standard:
+    </p>
+
+    <details open id="Uphold-the-character-of-the-language">
+      <summary>
+        <a href="#Uphold-the-character-of-the-language">
+          Uphold the character of the language
+        </a>
+      </summary>
+      <p>
+      C programmers attribute considerable value to its syntax and semantics.
+      New features should integrate seamlessly with the existing language.
+      Attention should be paid to the ideas behind design principles, common
+      idioms and habits, and the effect new features might have on the
+      language's economy of expression.
+      </p>
+    </details>
+
+    <details open id="Keep-the-language-small-and-simple">
+      <summary>
+        <a href="#Keep-the-language-small-and-simple">
+          Keep the language small and simple
+        </a>
+      </summary>
+      <p>
+      Features, and the concepts behind them, should be easy to explain
+      in a clear and concise manner. Language issues should be resolved
+      using minimal new machinery. Ideally, only one way of doing something
+      should be sufficient. Avoid additions with narrow use-cases that require
+      specialized expertise from implementers, when such features could be
+      provided externally. Simplicity enables both programmers and tools to
+      reason about code, allows for diverse implementations, keeps compilation
+      times short, and helps to achieve other principles.
+      </p>
+    </details>
+
+    <details open id="Facilitate-portability">
+      <summary>
+        <a href="#Facilitate-portability">
+          Facilitate portability
+        </a>
+      </summary>
+      <p>
+      C has been implemented on a wide variety of computers and operating
+      systems, including cross-compilation of code for embedded systems. The
+      language itself, together with the standard library, should be as widely
+      implementable as possible, while meeting its core objectives. The size
+      and complexity of the language and library should not place an undue
+      burden on constrained hardware.
+      </p>
+    </details>
+
+    <details open id="Avoid-ambiguities">
+      <summary>
+        <a href="#Avoid-ambiguities">
+          Avoid ambiguities
+        </a>
+      </summary>
+      <p>
+      <i>Undefined behaviors</i>, <i>unspecified behaviors</i>,
+      <i>implementation-defined behaviors</i>, and other
+      <i>portability issues</i> enumerated in Annex J of
+      the Standard should be eliminated or reduced.<br>
+      <strong>These issues might lead to application vulnerabilities.</strong>
+      </p>
+    </details>
+
+    <details open id="Pay-attention-to-performance">
+      <summary>
+        <a href="#Pay-attention-to-performance">
+          Pay attention to performance
+        </a>
+      </summary>
+      <p>
+      The potential for efficient code generation is one of the most important
+      strengths of C. To help ensure that no code explosion occurs for what
+      appears to be a very simple operation, many operations are defined to be
+      how the target implementation does it rather than by a general abstract
+      rule.
+      </p>
+    </details>
+
+    <details open id="Allow-programming-freedom">
+      <summary>
+        <a href="#Allow-programming-freedom">
+          Allow programming freedom
+        </a>
+      </summary>
+      <p>
+      It is essential to let the programmer take control, as not every task can
+      be accomplished within a sound set of bounds. C should offer flexibility
+      to do what needs to be done. Code can be non-portable to allow such
+      situations as direct interaction with the hardware, using features unique
+      to an implementation, or specific optimizations. Bypassing safety checks
+      should be possible when necessity arises. However, the need for such
+      divergences should be minimized.
+      </p>
+    </details>
+
+    <details open id="Codify-existing-practice-to-address-evident-deficiencies">
+      <summary>
+        <a href="#Codify-existing-practice-to-address-evident-deficiencies">
+          Codify existing practice to address evident deficiencies
+        </a>
+      </summary>
+      <p>
+      Prior art may come from other languages, although C implementations are
+      naturally more compelling. Unless a new feature addresses a significant
+      deficiency, no new inventions should be entertained. Avoid standardizing
+      workarounds instead of long-term solutions.
+      </p>
+    </details>
+
+    <details open id="Do-not-prefer-any-implementation-over-others">
+      <summary>
+        <a href="#Do-not-prefer-any-implementation-over-others">
+          Do not prefer any implementation over others
+        </a>
+      </summary>
+      <p>
+      C is a language with a wide variety of individual dialects.
+      No single implementation is the exemplar by which C is defined;
+      it is assumed that all existing implementations must change
+      somewhat to conform to the Standard. However, it should be
+      possible for existing implementations to gradually migrate
+      to future conformance.
+      </p>
+    </details>
+
+    <details open id="Do-not-leave-features-in-an-underdeveloped-state">
+      <summary>
+        <a href="#Do-not-leave-features-in-an-underdeveloped-state">
+          Do not leave features in an underdeveloped state
+        </a>
+      </summary>
+      <p>
+      Incremental change towards a full solution is a common approach to
+      introducing new features. However, care should be taken that features
+      are not left in a state which could reduce their overall usefulness,
+      hindering adoption and further development.
+      </p>
+    </details>
+
+    <details open id="Ease-migration-to-newer-language-editions">
+      <summary>
+        <a href="#Ease-migration-to-newer-language-editions">
+          Ease migration to newer language editions
+        </a>
+      </summary>
+      <p>
+      Developers should be able to mix and match code from different
+      language editions. The bulk of existing codebases should be largely
+      accepted by a translator conforming to a newer language revisions,
+      and the programmer's burden to change code just to have it accepted
+      by a conforming translator must be limited.
+      </p>
+    </details>
+
+    <details open id="Avoid-quiet-changes">
+      <summary>
+        <a href="#Avoid-quiet-changes">
+          Avoid quiet changes
+        </a>
+      </summary>
+      <p>
+      Changes that alter the meaning of existing code cause problems.
+      Breaking changes that require diagnostic messages are easily detected.
+      Avoid silent changes that cause a working program to behave differently
+      without requiring a diagnostic message. Where this principle is violated,
+      informative notes should be added to the Standard.
+      </p>
+    </details>
+
+    <details open id="Enable-secure-programming">
+      <summary>
+        <a href="#Enable-secure-programming">
+          Enable secure programming
+        </a>
+      </summary>
+      <p>
+      The language should take into account that programmers need the ability to
+      check their work. While not guaranteeing program correctness, properties
+      such as portability, unambiguity, memory safety, type safety, thread
+      safety, etc. are prerequisite to reasoning about security and reliability.
+      Software interfaces should be analyzable and verifiable. The language
+      should allow programmers to write concise, understandable, and readable
+      code.
+      </p>
+    </details>
+
+    <details open id="Enable-functional-safety">
+      <summary>
+        <a href="#Enable-functional-safety">
+          Enable functional safety
+        </a>
+      </summary>
+      <p>
+      C is frequently used in the development of safety-critical systems.
+      Functional safety is the systematic process used to analyze that a fault
+      does not prevent a program from performing its required function. An
+      analyzable subset of the language is used to create a safety argument;
+      this subset should be enlarged. Unbounded undefined behaviors (that
+      represent a single point of failure) should be eliminated.
+      </p>
+    </details>
+
+    <details open id="Ease-library-independence">
+      <summary>
+        <a href="#Ease-library-independence">
+          Ease library independence
+        </a>
+      </summary>
+      <p>
+      Fundamental language features should be operational without the standard
+      library and library functionalities should be implementable without
+      relying on compiler extensions. Supplying the library, or its parts,
+      independently from the compiler vendor, may serve needs such as safety,
+      efficiency, decreased size, or compatibility with multiple compilers on
+      diverse architectures. The burden and difficulty of matching
+      implementation details for such use-cases should be minimal.
+      </p>
+    </details>
+
+    <details open id="Facilitate-interoperability">
+      <summary>
+        <a href="#Facilitate-interoperability">
+          Facilitate interoperability
+        </a>
+      </summary>
+      <p>
+      C serves an important role as the <em>lingua franca</em>
+      of the programming world. It is a primary target for foreign
+      function interfaces and other languages often expose bindings
+      for C interactions.  Such communicative design allows C to exist
+      as a part of larger systems, often providing the means for improving
+      performance, being a gateway to the underlying platform, or translating
+      between components written in different languages.
+      </p>
+    </details>
+
+    <details open id="Follow-international-standards">
+      <summary>
+        <a href="#Follow-international-standards">
+          Follow international standards
+        </a>
+      </summary>
+      <p>
+      Software written in C is used worldwide. Beside information technology
+      standards, related international and industry norms for processing natural
+      language, date and time, units, numerical formats and so forth should be
+      taken into account. C should provide facilities for handling both human
+      and machine input and output, often given in various scripts and tongues.
+      </p>
+    </details>
+  </div>
+</body>
+</html>

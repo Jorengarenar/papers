@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>[Nxxxx] Compound identifiers with prefix::</title>
+  <meta name="keywords" content="c, namespace, prefix">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+
+    body {
+      font-family: Helvetica, Arial, sans-serif;
+      max-width: 900px;
+      text-align: justify;
+      margin: 20px auto;
+      background: #222;
+      font-size: 18px;
+      color: #aaa;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: underline dotted 1px #666;
+      text-underline-offset: 3px;
+    }
+
+    a:visited {
+      color: inherit;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    p + p {
+      margin-top: 1em;
+    }
+
+
+    code {
+      font-size: 0.85em;
+    }
+
+    :not(pre) > code {
+      background: #0a0a0a;
+      border: 1px dashed #333;
+      font-size: 0.85em;
+      padding: 0.1em;
+    }
+
+    pre:has(> code) {
+      background: #0a0a0a;
+      padding: 0.5em;
+      overflow: auto;
+      border: 1px dashed #333;
+      white-space: inherit;
+    }
+
+    pre > code {
+      display: block;
+      white-space: pre;
+      margin-top: -1.2em;
+    }
+
+
+    h1 { font-size: 1.90rem; }
+    h2 { font-size: 1.65rem; }
+    h3 { font-size: 1.45rem; }
+    h4 { font-size: 1.30rem; }
+    h5 { font-size: 1.15rem; }
+
+    ul, ol {
+      margin-top: 0px;
+      margin-bottom: 0px;
+    }
+
+    li {
+      margin-top: 0.1em;
+    }
+
+    ol > li::marker {
+      content: counters(list-item, '.') '. ';
+    }
+
+    summary > h1 {
+      display: inline;
+    }
+
+    body > ol > li > details {
+      margin: 1em;
+    }
+
+    body > ol > li > details > summary {
+
+    }
+
+    summary {
+      cursor: pointer;
+    }
+
+    summary:hover {
+      filter: brightness(120%);
+    }
+
+    summary:has(> h1)::marker {
+      content: "";
+    }
+
+    .nbsp {
+      white-space: nowrap;
+    }
+
+
+    #preamble > details > ul > li {
+      font-weight: bold;
+      margin-top: 0.5em;
+    }
+
+    #preamble > details li > * {
+      font-weight: initial;
+    }
+
+  </style>
+</head>
+<body>
+  <ol start="0">
+    <li id="preamble">
+      <details open>
+        <summary> <h1>Preamble</h1> </summary>
+        <ul id="header">
+          <li> Title:
+            <ul> <li> Compound identifiers with <code>prefix::</code> </li> </ul>
+          </li>
+          <li> Document number:
+            <ul> <li> WG14 Nxxxx </li> </ul>
+          </li>
+          <li> Date:
+            <ul> <li> <time>2024-??-??</time> </li> </ul>
+          </li>
+          <li> Author(s):
+            <ul>
+              <li>
+                <a href="mailto:me@jorenar.com" rel="author">Jakub Łukasiewicz</a>
+                (Motorola Solutions Systems Polska)
+              </li>
+            </ul>
+          </li>
+          <li> Category:
+            <ul> <li> New feature </li> </ul>
+          </li>
+          <li> Abstract:
+            <ul>
+              <li>
+                <p>
+                C is often quoted as the only mainstream language without any
+                form of (controllable) namespaces. There are a lot of schemes
+                of prefixing identifiers, but none of them offers truly clear
+                distinction where a prefix end and where the unique part of the
+                name begins, while also preserving readability and seamless
+                integration with tools. This paper proposes a relatively simple
+                <code>prefix::</code> feature which offers a way to reserve
+                and alias prefixes for identifiers.
+                </p>
+              </li>
+            </ul>
+          </li>
+          <li> Related documents:
+            <ul>
+              <li>
+                <a href="https://open-std.org/jtc1/sc22/wg14/www/docs/n688.htm">[WG14 N688]</a>
+                &nbsp; &lt;inttypes.h&gt; namespace issues.
+              </li>
+              <li>
+                <a href="https://open-std.org/jtc1/sc22/wg14/www/docs/n2807.htm">[WG14 N2807]</a>
+                Identifiers for use by users
+              </li>
+              <li>
+                <a href="https://open-std.org/jtc1/sc22/wg14/www/docs/n1345.htm">[WG14 N1345]</a>
+                Namespace Reservation for the C Standard
+              </li>
+              <li>
+                <a href="https://open-std.org/jtc1/sc22/wg14/www/docs/n2409.pdf">[WG14 N2409]</a>
+                What we think we reserve
+              </li>
+              <li>
+                <a href="https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2002/n1408.html">[WG21 N1408]</a>
+                Proposal for new Namespaces and Lookup Rules
+              </li>
+              <li>
+                <a href="https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2007/n2386.pdf">[WG21 N2386]</a>
+                Namespace Regions
+              </li>
+              <li>
+                <a href="https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2008/n2667.htm">[WG21 N2667]</a>
+                Reserved Namespace for POSIX
+              </li>
+              <li>
+                <a href="https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n4230.html">[WG21 N4230]</a>
+                Nested namespace definition (revision 2)
+              </li>
+            </ul>
+          </li>
+          <li> Changelog:
+            <ul>
+              <li>
+                <a href="https://open-std.org/jtc1/sc22/wg14/www/docs/nxxxx.htm">Nxxxx</a>
+                (<time>2024-??-??</time>)
+                <ul>
+                  <li> initial proposal </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </details>
+    </li>
+    <li id="introduction">
+      <details open>
+        <summary>
+          <h1> Introduction and motivation </h1>
+        </summary>
+        <p>
+        Contrary to the majority of the other mainstream languages, C lacks any
+        mechanism for programmers to properly control namespaces for their
+        software interfaces. That leads up to projects emulating the behaviour
+        of namespaces via various workarounds, each with its own set of
+        advantages and disadvantages over the others, but none being clearly
+        the best choice. The solutions known from other languages also aren't
+        the perfect fit for the landscape of C.
+        </p>
+
+        <p>
+        The following qualities of API written in C should be preserved:
+        </p>
+        <ul>
+          <li> readability &ndash; </li>
+          <li> searchability &ndash; for usual case, <code>grep</code> or <code>ctags</code> should be enough </li>
+          <li> explicitness &ndash; what you see in code is what you get in binary </li>
+          <li> pre-processability &ndash; </li>
+          <li> processability &ndash; refactoring code should be easy even with simple tools like <code>sed</code></li>
+        </ul>
+
+        <p/>
+
+        <p>
+        And the following should be added:
+        </p>
+        <ul>
+          <li> incentive to prefix identifiers </li>
+        </ul>
+
+      </details>
+    </li>
+    <li id="prior-art">
+      <details open>
+        <summary>
+          <h1> Prior art </h1>
+        </summary>
+        <ol>
+          <li> <!-- Emulating namespaces in C -->
+            <h2> Emulating namespaces in C </h2>
+            <ol>
+              <li> <!-- Traditional prefix_XYZ names -->
+                <h3> Traditional <code>prefix_XYZ</code> names </h3>
+                <p>
+                Using  an identifier naming convention that prefixes every
+                identifier with library and/or module name is currently the
+                simplest and most reliable method.
+                </p>
+
+                <p>
+                For example, <a href="https://curl.se/libcurl/c/">libcurl</a>
+                exposes identifiers such as:
+                </p>
+                <pre>
+<code>
+curl_version()
+curl_slist_append()
+curl_mime_init()
+
+curl_easy_init()
+curl_easy_cleanup()
+curl_easy_getinfo()
+
+curl_multi_add_handle()
+curl_multi_poll()
+curl_multi_perform()
+</code>
+                </pre>
+
+                <p>
+                A flaw with this approach is that programmer not familiar with
+                given API might get confused what the identifier does. In fact,
+                exactly such scenario did occur during presentation of paper
+                <a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3185.htm">N3185</a>
+                at the WG14 meeting in Strasbourg.<br>
+                The name of macro <code>ONCE_DEPEND()</code> suggests that
+                it will make dependency only once (in one TU), while the
+                real meaning is to make dependency to code defined via
+                <code>ONCE_DEFINE()</code> macro. In other words, it
+                got misunderstood as literal "depend once" instead of
+                <span class="nbsp">"<code>DEPEND()</code> from module ONCE"</span>.
+                </p>
+
+                <p>
+                As an improvement to such situation sometimes double underscore
+                is used
+                </p>
+              </li>
+              <li> <!-- NS() concatenating macros -->
+                <h3> <code>NS()</code> concatenating macros </h3>
+              </li>
+              <li> <!-- Function pointers in C structs -->
+                <h3> Function pointers in C structs </h3>
+              </li>
+            </ol>
+          </li>
+          <li> <!-- C++'s namespaces -->
+            <h2> C++'s namespaces </h2>
+            <a href="https://en.cppreference.com/w/cpp/language/namespace">
+              https://en.cppreference.com/w/cpp/language/namespace
+            </a>
+          </li>
+          <li> <!-- C#'s namespaces -->
+            <h2> C#'s namespaces </h2>
+          </li>
+          <li> <!-- Java's classes and packages -->
+            <h2> Java's classes and packages </h2>
+          </li>
+          <li> <!-- Rust's paths -->
+            <h2> Rust's paths </h2>
+            <a href="https://doc.rust-lang.org/reference/paths.html">
+              https://doc.rust-lang.org/reference/paths.html
+            </a>
+          </li>
+          <li> <!-- PHP's namespaces -->
+            <h2> PHP's namespaces </h2>
+          </li>
+        </ol>
+      </details>
+    </li>
+    <li id="design">
+      <details open>
+        <summary>
+          <h1> Design </h1>
+        </summary>
+        <ol>
+          <li>
+            <h2> Rules </h2>
+            <ol>
+            </ol>
+          </li>
+          <li>
+            <h2> Compatibility with C++ </h2>
+            <ol>
+            </ol>
+          </li>
+        </ol>
+      </details>
+    </li>
+    <li id="use-cases">
+      <details open>
+        <summary>
+          <h1> Use-cases </h1>
+        </summary>
+      </details>
+    </li>
+    <li id="polls">
+      <details open>
+        <summary>
+          <h1> Questions to WG14 </h1>
+        </summary>
+        <ol>
+          <li> Does WG14 want for C2y something along the lines of <code>prefix::</code> proposed in Nxxxx?</li>
+          <li> Does WG14 want namespaces/prefixes in any form in C2y? </li>
+        </ol>
+      </details>
+    </li>
+    <li id="acknowledgements">
+      <details open>
+        <summary>
+          <h1> Acknowledgements </h1>
+        </summary>
+        <p>
+        <span>
+          <!-- vale off -->
+          Eskil Steenberg,
+          Alex Celeste,
+          Martin Uecker,
+          Jens Gustedt,
+          Ville Voutilainen,
+          Marcus Johnson
+        </span>
+        for providing insightful ideas, opinions and brainstorming on the reflector.
+        </p>
+      </details>
+    </li>
+    <li id="references">
+      <details open>
+        <summary>
+          <h1> References </h1>
+        </summary>
+        <ol>
+          <li>
+            <a href="https://doc.rust-lang.org/reference/paths.html">
+              Paths - The Rust Reference
+            </a>
+          </li>
+          <li>
+            <a href="https://devblogs.microsoft.com/oldnewthing/20230109-00/?p=107685">
+              On leading underscores and names reserved by the C and C++ languages - The Old New Thing
+            </a>
+            <ul>
+              <li>
+                <a href="https://news.ycombinator.com/item?id=34337996">
+                  On leading underscores and names reserved by the C and C++ languages | Hacker News
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="https://reddit.com/r/C_Programming/comments/11v8zml/when_will_c_get_namespaces/">
+              When will C get namespaces? : r/C_Programming
+            </a>
+          </li>
+          <li>
+            <a href="https://bytes.com/topic/c/answers/453493-why-not-add-namespace-feature-into-standard-c">
+              Why not add namespace feature into standard C?
+            </a>
+          </li>
+          <li>
+            <a href="https://en.cppreference.com/w/cpp/language/namespace">
+              Namespaces - cppreference.com
+            </a>
+          </li>
+          <li>
+            <a href="https://groups.google.com/a/dartlang.org/g/misc/c/oM3NKHLUxes">
+              use of "_" prefix to designate "private"/"library" scope...
+            </a>
+          </li>
+          <li>
+            <a href="https://utcc.utoronto.ca/~cks/space/blog/programming/CUnionsForNamespaces">
+              Learning that you can use unions in C for grouping things into namespaces
+            </a>
+          </li>
+          <li>
+            <a href="https://www.youtube.com/watch?v=mhlUSGZKtco">
+              Namespaces in C (Renamable libraries)
+            </a>
+            <ul>
+              <li>
+                <a href="https://old.reddit.com/r/C_Programming/comments/xswru1/namespaces_in_c_renamable_libraries/">
+                  Namespaces in C (Renamable libraries) : r/C_Programming
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="https://ejrh.wordpress.com/2012/01/24/namespaces-in-c/">
+              Namespaces in C | EJRH
+            </a>
+          </li>
+          <li>
+            <a href="https://en.wikipedia.org/wiki/Namespace">
+              Namespace - Wikipedia
+            </a>
+          </li>
+          <li>
+            <a href="https://en.wikibooks.org/wiki/Introduction_to_Programming_Languages/Scoping_with_Namespaces">
+              Introduction to Programming Languages/Scoping with Namespaces - Wikibooks
+            </a>
+          </li>
+          <li>
+            <a href="https://stackoverflow.com/questions/46626494">
+              Does C have namespaces similar to C++?
+            </a>
+          </li>
+          <li>
+            <a href="https://old.reddit.com/r/ProgrammingLanguages/comments/9dfu49/is_namespace_necessary/">
+              Is namespace necessary? : r/ProgrammingLanguages
+            </a>
+          </li>
+          <li>
+            <a href="https://stackoverflow.com/questions/4396140">
+              Why doesn't ANSI C have namespaces? - Stack Overflow
+            </a>
+          </li>
+          <li>
+            <a href="http://lambda-the-ultimate.org/node/3991">
+              How important is language support for namespace management? | Lambda the Ultimate
+            </a>
+          </li>
+          <li>
+            <a href="http://lambda-the-ultimate.org/node/4047">
+              The ideal style/system for namespaces. | Lambda the Ultimate
+            </a>
+          </li>
+          <!--
+            <li>
+            <a href="https://people.cs.ksu.edu/~schmidt/705s12/Lectures/NS12/ns12S.html">
+            Namespace-based language modelling
+            </a>
+            </li>
+          -->
+        </ol>
+      </details>
+    </li>
+  </ol>
+</body>
+</html>
+
+<!-- vim: set fen fdl=1: -->

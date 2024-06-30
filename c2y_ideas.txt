@@ -1,0 +1,41 @@
+* byte
+* #ban / #disable
+* (#header NAME + #source NAME) or (#module NAME)
+* int<N>
+* [[restrict]]
+* malloc_size() / malloc_usable_size() / HeapSize()
+* fat pointers and slices
+    https://www.open-std.org/JTC1/SC22/WG14/www/docs/n2529.pdf
+    https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2660.pdf
+    https://www.bell-labs.com/usr/dmr/www/vararray.pdf
+* debloating C library
+  * remove Annex K
+    * https://stackoverflow.com/questions/50724726
+    * https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1106.txt
+    * https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1967.htm
+    * https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2986.htm
+
+        > Basic concerns boil down to: Martin's experiment was not a useful one
+        > because he took existing, working code and rewrote it using entirely
+        > new APIs, then concluded the new APIs are bad because it introduced
+        > new bugs. However, 1) from a safety and security perspective, you
+        > would never do this! you don't take working, battle tested code, and
+        > rewrite it for no functional changes, because the risk is that you
+        > introduce new bugs. 2) Annex K was known at the time it was added that
+        > it was not a transitionary set of APIs. We never expected users to do
+        > what Martin tried in his experiment, we expected new code to use the
+        > new APIs, and old code to use the new APIs only under very specific
+        > circumstances.
+        >
+        > So tl;dr: Martin's findings were not surprising or really telling
+        > of the API. An experiment that would have been compelling would have
+        > been, two groups of programmers write the same program twice, once
+        > using Annex K and once using C standard library functions, and then
+        > see which has less bugs.
+
+        > You're refering to "Common Mistakes" section, right? I'll definitely
+        > pay extra attention while updating the paper then
+
+        > Largely, yes. And thank you! I'm happy to review anything you
+        > write as an early draft, if you'd like (you can always email
+        > me at aaron@aaronballman.com)

@@ -1,3 +1,4 @@
+* versioning
 * byte
 * #ban / #disable
 * (#header NAME + #source NAME) or (#module NAME)
@@ -8,6 +9,7 @@
     https://www.open-std.org/JTC1/SC22/WG14/www/docs/n2529.pdf
     https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2660.pdf
     https://www.bell-labs.com/usr/dmr/www/vararray.pdf
+    https://www.digitalmars.com/articles/C-biggest-mistake.html
 * debloating C library
   * remove Annex K
     * https://stackoverflow.com/questions/50724726

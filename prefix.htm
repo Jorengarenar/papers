@@ -81,16 +81,8 @@
       content: counters(list-item, '.') '. ';
     }
 
-    summary > h1 {
-      display: inline;
-    }
-
     body > ol > li > details {
       margin: 1em;
-    }
-
-    body > ol > li > details > summary {
-
     }
 
     summary {
@@ -101,8 +93,17 @@
       filter: brightness(120%);
     }
 
-    summary:has(> h1)::marker {
-      content: "";
+    summary:has(> h1) {
+      position: relative;
+      transform: scaleX(-1);
+      margin-bottom: 0.3em;
+    }
+
+    summary > h1 {
+      transform: scaleX(-1);
+      position: absolute;
+      right: 0;
+      top: -1em;
     }
 
     .nbsp {
@@ -134,7 +135,7 @@
             <ul> <li> WG14 Nxxxx </li> </ul>
           </li>
           <li> Date:
-            <ul> <li> <time>2024-??-??</time> </li> </ul>
+            <ul> <li> <time>2025-??-??</time> </li> </ul>
           </li>
           <li> Author(s):
             <ul>
@@ -203,7 +204,7 @@
             <ul>
               <li>
                 <a href="https://open-std.org/jtc1/sc22/wg14/www/docs/nxxxx.htm">Nxxxx</a>
-                (<time>2024-??-??</time>)
+                (<time>2025-??-??</time>)
                 <ul>
                   <li> initial proposal </li>
                 </ul>
@@ -303,11 +304,23 @@ curl_multi_perform()
 
                 <p>
                 As an improvement to such situation sometimes double underscore
-                is used
+                is used, although it's not a very popular choice as it creates
+                too much visual spacing.
                 </p>
               </li>
               <li> <!-- NS() concatenating macros -->
                 <h3> <code>NS()</code> concatenating macros </h3>
+
+                Another approach, popular especially when applying X-Files
+                technique, is utilizing preprocessor for the task:
+
+                <pre>
+<code>
+</code>
+                </pre>
+
+                Major issue is tooling not being able to handle it properly.
+
               </li>
               <li> <!-- Function pointers in C structs -->
                 <h3> Function pointers in C structs </h3>
@@ -391,6 +404,10 @@ curl_multi_perform()
           Marcus Johnson
         </span>
         for providing insightful ideas, opinions and brainstorming on the reflector.
+        </p>
+
+        <p>
+        Bartosz Zielonka for prompting the idea.
         </p>
       </details>
     </li>

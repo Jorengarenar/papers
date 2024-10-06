@@ -1,4 +1,4 @@
-* versioning
+* versioning a la Perl's `use`
 * byte
 * #ban / #disable
 * (#header NAME + #source NAME) or (#module NAME)
@@ -41,3 +41,5 @@
         > Largely, yes. And thank you! I'm happy to review anything you
         > write as an early draft, if you'd like (you can always email
         > me at aaron@aaronballman.com)
+
+        (Alejandro also is interested)
